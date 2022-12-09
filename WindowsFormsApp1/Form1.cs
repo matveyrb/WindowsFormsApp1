@@ -28,6 +28,7 @@ namespace WindowsFormsApp1
                 labelName = textBox6.Text,
                 foundingDate = dateTimePicker1.Value.ToString("yyyy-MM-dd")
             };
+
             info birth = new info();
             birth.place = textBox4.Text;
             birth.yearOfBirth = int.Parse(textBox5.Text);
@@ -71,29 +72,42 @@ namespace WindowsFormsApp1
             var property = new Music();
             richTextBox1.Text += $" Hashcode равен: {property.GetHashCode()}\n"; 
         }
-
         List<Music> msc = new List<Music>();
         private void Form1_Load(object sender, EventArgs e)
         {
             BackColor = Music.BackColor;
             Font = Music.FontText;
-            msc.Add(new Music("1", "Алла Пугачева", "Миллион алых роз", DateTime.Parse("2022-07-05")));
+            msc.Add(new Music("Алла Пугачева", "Миллион алых роз","1", DateTime.Parse("2022-07-05")));
             listBox1.DataSource = msc;
             listBox1.DisplayMember = "number";
-            textBox7.DataBindings.Add("Text", msc, "number");
             textBox8.DataBindings.Add("Text", msc, "name");
             textBox9.DataBindings.Add("Text", msc, "song");
             textBox10.DataBindings.Add("Text", msc, "genre");
+            textBox7.DataBindings.Add("Text", msc, "number");
             dateTimePicker2.DataBindings.Add("Value", msc, "foundingDate");
 
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            msc.Add(new Music() {name = textBox3.Text, song = textBox2.Text, foundingDate = dateTimePicker1.Value.ToString()});
+            msc.Add(new Music() {name = textBox3.Text, song = textBox2.Text, number = textBox11.Text, foundingDate = dateTimePicker1.Value.ToString()});
             listBox1.DataSource = null;
             listBox1.DataSource = msc;
             listBox1.DisplayMember = "number";
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() != DialogResult.Cancel)
+            {
+                Music pht = new Music(openFileDialog1.FileName);
+                pht.ShowPhoto(pictureBox1);
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Mylibrary
 {
     public class Music
     {
-        public string number;
+        public string number { get; set; }
         public string song { get; set; }
         private string Name;
         public string name
@@ -40,7 +42,7 @@ namespace Mylibrary
         public string genre { get; } = "Хип хоп";
         public string foundingDate { get; set; }
         public string labelName;
-        
+        public string foto;
 
         public Music() : this("Нет имени артиста", "Нет названия песни")
         { }
@@ -50,12 +52,32 @@ namespace Mylibrary
         {
             this.name = name; this.song = song; this.issue = issue;   
         }
-        public Music(string song, string name, string number, DateTime foundingDate)
+        public Music(string name, string song, string number, DateTime foundingDate)
         {
             this.song = song;
             this.name = name;
             this.number = number;
             this.foundingDate = foundingDate.ToString();
+        }
+        public Music(string foto)
+        {
+            this.foto = foto;
+        }
+        public string area;
+        public Boolean typeOfArea;
+        public void typeR()
+        {
+            if (typeOfArea)
+            {
+                this.area = "Spotify";
+            }
+            else
+                this.area = "Yandex music";
+        }
+        public void ShowPhoto(PictureBox box)
+        {
+            Graphics h = Graphics.FromHwnd(box.Handle);
+            h.DrawImage(Image.FromFile(this.foto), new Rectangle(0, 0, box.Width, box.Height));
         }
 
         public static readonly Color BackColor;
@@ -76,7 +98,15 @@ namespace Mylibrary
                 FontText = new Font("Arial", 13, FontStyle.Italic);
             }
         }
+        public void WriteFile(string path)
+        {
+            StreamWriter writer = new StreamWriter(path + ".txt");
+            writer.WriteLine("Номер: " + this.number + "\nИмя артиста: " + this.name + "\nНазвание песни: " + this.song + "\nЖанр песни: " +
+                this.genre + "Дата выхода: " + this.issue.ToString() + this.area);
+        }
     }
+
+
     public struct info
     {
         public string place;
